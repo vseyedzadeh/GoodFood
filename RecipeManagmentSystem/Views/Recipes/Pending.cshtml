@@ -23,6 +23,7 @@ else
                 <tr>
                     <th>Pending Recipe to be process</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +34,7 @@ else
                         <td>@item.Category.Title</td>
                         <td>
                             @Html.ActionLink("Details", "PendingDetails", "Recipes", new { id = item.ID }, null)
-                            @Html.ActionLink("Edit", "Edit", "Recipes", new { id = item.ID }, null)
+                           
                         </td>
                     </tr>
                 }

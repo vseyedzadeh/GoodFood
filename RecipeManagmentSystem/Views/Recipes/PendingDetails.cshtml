@@ -55,9 +55,9 @@
                         @Html.HiddenFor(c => c.ID);
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-info">Approve</button>
-                        <button class="btn btn-info" > @Html.ActionLink("Edit", "Add")</button>
-                        <button class="btn btn-info"> @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { onclick = " return DeleteConfirm()" })</button>
-                        <button class="btn btn-info"> @Html.ActionLink("Back To List", "Pending")</button>
+                        <button class="btn btn-info" > @Html.ActionLink("Edit N Approve", "PendingEdit", new { id = Model.ID }, new {@class = "aWhite"})</button>
+                        <button class="btn btn-info"> @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { onclick = " return DeleteConfirm()", @class= "aWhite"})</button>
+                        <button class="btn btn-info"> @Html.ActionLink("Back To List", "Pending", new { id = Model.ID }, new { @class = "aWhite" })</button>
                     }
                 </div>
             </div>

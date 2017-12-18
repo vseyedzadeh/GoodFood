@@ -1,10 +1,10 @@
 ﻿@model RecipeManagmentSystem.ViewModels.RecipeCategoryViewModel
 @{
-    ViewBag.Title = "ADD";
+    ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Add New Recipe</h2>
+<h2>@Model.Title</h2>
 
 @using (Html.BeginForm("Save", "Recipes"))
 {
@@ -64,26 +64,27 @@
         </div>
     </div>
 </div>
-    <div class="row" style="background-color:whitesmoke">
-        <div class="col-md-6">
-            <div class="form-group">
-                @Html.LabelFor(m => m.Recipe.Ingredients) (Please Enter New line for each ingredient)
-                @Html.TextAreaFor(m => m.Recipe.Ingredients, new { @class = "form-control", rows = "10", style = "min-width: 100%" })
-                @Html.ValidationMessageFor(m => m.Recipe.PrepTime)
-            </div>
+<div class="row" style="background-color:whitesmoke">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Recipe.Ingredients) (Please Enter New line for each ingredient)
+            @Html.TextAreaFor(m => m.Recipe.Ingredients, new { @class = "form-control", rows = "10", style = "min-width: 100%" })
+            @Html.ValidationMessageFor(m => m.Recipe.PrepTime)
         </div>
+    </div>
 
-        <div class="col-md-6">
-            <div class="form-group">
-                @Html.LabelFor(m => m.Recipe.Direction)
-                @Html.TextAreaFor(m => m.Recipe.Direction, new { @class = "form-control", rows = "10", style = "min-width: 100%" })
-                @Html.ValidationMessageFor(m => m.Recipe.Direction)
-            </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Recipe.Direction)
+            @Html.TextAreaFor(m => m.Recipe.Direction, new { @class = "form-control", rows = "10", style = "min-width: 100%" })
+            @Html.ValidationMessageFor(m => m.Recipe.Direction)
         </div>
-        @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-primary">Save</button>
-        @Html.ActionLink("Back to List", "Index", "Home")
-    </div>     
+    </div>
+    @Html.HiddenFor(c => c.Recipe.ID)
+    @Html.AntiForgeryToken()
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</div>     
         }
 
 

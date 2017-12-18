@@ -146,7 +146,7 @@ namespace RecipeManagmentSystem.Controllers
         }
 
         //get edit for admin
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult PendingEdit(int id)
         {
             var result = _context.Recipe.Find(id);
@@ -156,10 +156,10 @@ namespace RecipeManagmentSystem.Controllers
             }
             var viewModel = new RecipeCategoryViewModel()
             {
-                Recipe = new Recipe(),
+                Recipe = result,
                 CategoryList = _context.Category.ToList()
             };
-            return View(viewModel);
+            return View("Add", viewModel);
 
         }
 
@@ -223,7 +223,7 @@ namespace RecipeManagmentSystem.Controllers
                 RecipeDb.NumOfServ = recipe.NumOfServ;
                 RecipeDb.PrepTime = recipe.PrepTime;
                 RecipeDb.UserID = User.Identity.GetUserId();
-                //RecipeDb.Approve = false;
+                RecipeDb.Approve = true;
 
             }
 
