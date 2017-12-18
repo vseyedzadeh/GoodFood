@@ -10,12 +10,12 @@ namespace RecipeManagmentSystem.ViewModels
     {
         public Recipe Recipe { get; set; }
         public IEnumerable<Category> CategoryList { get; set; }
+        public string Title => Recipe.ID == 0 ? "Add Recipe" : "Edit Recipe";
+
         public RecipeCategoryViewModel()
         {
-            Recipe recipe = new Recipe()
-            {
-                ID = 0
-            };
+            Recipe = new Recipe();
+            Recipe.ID = 0;
         }
     }
 }

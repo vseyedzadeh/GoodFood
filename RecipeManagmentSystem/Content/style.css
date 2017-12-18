@@ -600,3 +600,7 @@ textarea {
 #ingredient-list li.ingredient.shopping-list i {
     visibility: visible;
 }
+
+.aWhite {
+    color: white;
+}
