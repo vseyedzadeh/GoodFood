@@ -1,0 +1,15 @@
+﻿@model List<RecipeManagmentSystem.Models.ShoppingList>
+@{
+    ViewBag.Title = "ShoppingList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ShoppingList</h2>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@item.ItemName</li>
+    }
+</ul>
+

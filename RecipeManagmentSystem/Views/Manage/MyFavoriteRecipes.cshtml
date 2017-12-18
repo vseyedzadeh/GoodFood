@@ -1,0 +1,92 @@
+﻿@model RecipeManagmentSystem.ViewModels.RecipeFavoriteViewModel
+@{
+    ViewBag.Title = "MyFavoriteRecipes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyFavoriteRecipes</h2>
+
+@if (!Model.Favorite.Any())
+{
+    <h3>No available Recipes</h3>
+}
+
+<div class="card-columns">
+    @foreach (var item in Model.Favorite)
+    {
+
+        <div class="card">
+            <a href="@Url.Action("Detail", "Recipes", new { RecipeId = item.Favorite.Recipe.ID})">
+                <!--Card image-->
+                <div class="view overlay hm-white-slight">
+                    <img src="../Image/@item.Favorite.Recipe.Image" class="img-fluid" alt="@item.Favorite.Recipe.Title" data-animate-effect="fadeIn">
+                </div>
+                <!--/.Card image-->
+                <!--Card content-->
+                <div class="card-body">
+                    <!--Title-->
+                    <h4 class="card-title">@item.Favorite.Recipe.Title</h4>
+                </div>
+            </a>
+            <!--/.Card content-->
+            <div class="card-data">
+                <ul>
+                    <li><i class="fa fa-user"></i>&nbsp;by: @item.SubmitterUsername</li>
+                    <li>|</li>
+                    <li>
+                        
+                   @using (Html.BeginForm("MakeFavorite", "Recipes", FormMethod.Post, new { @class = "makeFavorite" }))
+                    {
+                                <div>
+                                    <a id="favorite" class="btn-submit" href="#">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                </div>
+                                @Html.Hidden("recipeId", item.Favorite.Recipe.ID)
+                                @Html.Hidden("userName", Model.UserName)
+                                @Html.AntiForgeryToken()
+                            }
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $div = $('.card-columns');
+
+            $div.find("form.makeFavorite a.btn-submit").click(function (e) {
+                e.preventDefault();
+
+                var $a = $(this);
+                var $icon = $a.children('i')
+                var $form = $($(this).parents('form')[0]);
+                var action = $form.attr('action');
+                $.ajax({
+                    url: action,
+                    method: 'POST',
+                    data: $form.serializeArray(),
+                    success: function (data) {
+                        if (data.success) {
+                            if (!data.favorite) {
+                                $icon.removeClass('fa-heart').addClass('fa-heart-o');
+                                location.reload();
+                                
+                            } 
+                        }
+                    }
+                });
+
+            });
+
+
+        });
+
+    </script>
+}

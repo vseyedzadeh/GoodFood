@@ -1,0 +1,75 @@
+﻿@model RecipeManagmentSystem.Models.Recipe
+@{
+    ViewBag.Title = "PendingDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PendingDetails</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                <h1 class="panel-title list-panel-title">@Model.Title Details:</h1>
+                <div class="list-group">
+                    <a class="list-group-item">
+                        <h4 class="list-group-item-heading">Title</h4>
+                        <p class="list-group-item-text">@Model.Title</p>
+                    </a>
+                    <a class="list-group-item">
+                        <h4 class="list-group-item-heading">Description</h4>
+                        <p class="list-group-item-text">@Model.Description</p>
+                    </a>
+                    <a class="list-group-item">
+                        <h4 class="list-group-item-heading">Category</h4>
+                        <p class="list-group-item-text">@Model.Category.Title</p>
+                    </a>
+                    <a class="list-group-item">
+                        <h4 class="list-group-item-heading">Prep Time</h4>
+                        <p class="list-group-item-text">@Model.PrepTime Minutes</p>
+                    </a>
+                    <a class="list-group-item">
+                        <h4 class="list-group-item-heading">Cook time</h4>
+                        <p class="list-group-item-text">@Model.CookTime Minutes</p>
+                    </a>
+                    <a class="list-group-item">
+                        <h4 class="list-group-item-heading">Country</h4>
+                        <p class="list-group-item-text">@Model.Country</p>
+                    </a>
+                    <a class="list-group-item">
+                        <h4 class="list-group-item-heading">Number of Serving</h4>
+                        <p class="list-group-item-text">@Model.NumOfServ</p>
+                    </a>
+                    <a class="list-group-item">
+                        <h4 class="list-group-item-heading">Ingredients</h4>
+                        <p class="list-group-item-text"><pre>@Model.Ingredients</pre></p>
+                    </a>
+                    <a class="list-group-item">
+                        <h4 class="list-group-item-heading">Direction</h4>
+                        <p class="list-group-item-text"><pre>@Model.Direction</pre></p>
+                    </a>
+                    <br />
+
+                    @using (Html.BeginForm("PendingApprove", "Recipes"))
+                    {
+                        @Html.HiddenFor(c => c.ID);
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-info">Approve</button>
+                        <button class="btn btn-info" > @Html.ActionLink("Edit", "Add")</button>
+                        <button class="btn btn-info"> @Html.ActionLink("Delete", "Delete", new { id = Model.ID }, new { onclick = " return DeleteConfirm()" })</button>
+                        <button class="btn btn-info"> @Html.ActionLink("Back To List", "Pending")</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function DeleteConfirm() {
+        if (confirm("Are you sure want to delete record"))
+            return true;
+        else
+            return false;
+    }
+</script>

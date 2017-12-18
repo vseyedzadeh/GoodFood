@@ -1,0 +1,66 @@
+﻿@model RecipeManagmentSystem.ViewModels.RecipeDetailViewModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var recipe = Model.Recipe;
+}
+
+<div><h2>@recipe.Title</h2></div>
+<div><img src="../Image/@recipe.Image" class="img-fluid" alt="@recipe.Title" data-animate-effect="fadeIn">
+</div>
+<div>Recipe by: @recipe.User.UserName</div>
+<div>@recipe.Description</div>
+<div><i class="fa fa-clock-o"></i>Prep: @recipe.PrepTime | Cook: @recipe.CookTime | @recipe.NumOfServ Serving</div>
+<div>Country: @recipe.Country</div>
+<div><p><h5>Ingredients</h5>***(Click on ingredients and put them in your shoppingList!)</p></div>
+<div><hr /></div>
+<div>
+    <ul id="ingredient-list">
+        @foreach (var item in Model.Ingredients)
+        {
+            <li class="ingredient @(item.IsInShoppingList ? "shopping-list" : "")">
+                <a href="#">
+                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                    <span>@item.Name</span>
+                </a>
+            </li>
+        }
+        
+    </ul>
+</div>
+<div>
+    <h5>Directions</h5>
+</div>
+<div><hr /></div>
+<div>
+    <p>@Html.Raw(recipe.Direction)</p>
+
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#ingredient-list li.ingredient > a").click(function (e) {
+                e.preventDefault();
+
+                var $li = $(this).parent();
+                var ingredient = $li.find('span').text();
+
+                var data = {
+                    'ingredient': ingredient
+                };
+
+                $.ajax({
+                    url: '@Url.Action("AddToShoppingList", "Manage")',
+                    method: 'POST',
+                    data: data,
+                    success: function (result) {
+                        if (result && result.success) {
+                            $li.toggleClass('shopping-list');
+                        }
+                    }
+                })
+            });
+        });
+    </script>    
+}

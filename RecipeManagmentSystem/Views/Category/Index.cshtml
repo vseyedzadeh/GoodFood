@@ -1,0 +1,30 @@
+﻿@model IEnumerable<RecipeManagmentSystem.Models.Category>
+@{
+    ViewBag.Title = "Category | good food";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-columns">
+    @foreach (var item in Model)
+    {
+
+        <div class="card img-loaded">
+            <a href="@Url.Action("AvailableRecipes", "Recipes", new { catId = item.ID})">
+                <!--Card image-->
+                <div class="view overlay hm-white-slight">
+                    <img src="../Image/@item.Image" class="img-fluid" alt="@item.Title">
+                </div>
+                <!--/.Card image-->
+                <!--Card content-->
+                <div class="card-body">
+                    <!--Title-->
+                    <h4 class="card-title">@item.Title</h4>
+                </div>
+                <!--/.Card content-->
+            </a>
+        </div>
+
+    }
+</div>
+
+

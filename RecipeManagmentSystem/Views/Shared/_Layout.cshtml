@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.min.css">
+
+</head>
+<body>
+
+    <aside class="probootstrap-aside js-probootstrap-aside">
+        <div class="text-center">
+            <img src="~/Image/goodfoodLogo.jpg" alt="RecipeLibrary" class="logo img-thumbnail" />
+            <h2>
+                @Html.ActionLink("good food", "Index", "Home", new { area = "" }, new { @class = "logotitle" })
+            </h2>
+        </div>
+        <div class="probootstrap-overflow">
+            <div>
+                <nav class="probootstrap-nav">
+                    <ul>
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+
+                </nav>
+            </div>
+            <div>
+                <nav class="probootstrap-nav">
+                    @Html.Partial("_LoginPartial")
+                </nav>
+            </div>
+            
+        </div>
+        <footer class="probootstrap-aside-footer">
+            <ul class="list-unstyled d-flex">
+                <li><i class="fa fa-twitter-square fa-2x"></i><span class="icon-twitter">&nbsp;</span></li>
+                <li><i class="fa fa-instagram fa-2x"></i><span class="icon-instagram">&nbsp;</span></li>
+                <li><i class="fa fa-youtube-square fa-2x"></i><span class="icon-dribbble">&nbsp;</span></li>
+            </ul>
+            <p>&copy; @DateTime.Now.Year <a href="/Index" target="_blank">good food</a>. <br> All Rights Reserved.</p>
+        </footer>
+    </aside>
+
+
+    <main role="main" class="probootstrap-main js-probootstrap-main">
+        @RenderBody()
+
+    </main>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

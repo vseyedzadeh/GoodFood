@@ -1,0 +1,113 @@
+﻿@model RecipeManagmentSystem.ViewModels.CategoryRecipeViewModel
+@{
+    ViewBag.Title = "AvailableRecipes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AvailableRecipes | @Model.Category.Title</h2>
+
+@if(!@Model.Recipes.Any())
+{
+<h3>No available Recipes</h3>
+}
+
+<div class="card-columns">
+    @foreach (var item in Model.Recipes)
+    {
+
+        <div class="card">
+            <a href="@Url.Action("Detail", "Recipes", new { RecipeId = item.Recipe.ID})">                
+                <!--Card image-->
+                <div class="view overlay hm-white-slight">
+                    <img src="../Image/@item.Recipe.Image" class="img-fluid" alt="@item.Recipe.Title" data-animate-effect="fadeIn">
+                </div>
+                <!--/.Card image-->
+                <!--Card content-->
+                <div class="card-body">
+                    <!--Title-->
+                    <h4 class="card-title">@item.Recipe.Title</h4>
+                </div>
+            </a>
+            <!--/.Card content-->
+            <div class="card-data">
+                <ul>
+                    <li><i class="fa fa-user"></i>&nbsp;by: @item.Recipe.User.UserName</li>
+                    <li>|</li>
+                    <li>
+                        @if (!string.IsNullOrEmpty(Model.UserName))
+                {
+                    using (Html.BeginForm("MakeFavorite", "Recipes", FormMethod.Post, new { @class = "makeFavorite" }))
+                    {
+                                <div>
+                                    <a id="favorite" class="btn-submit" href="#">
+                                        <i class="fa @(@item.IsFavorite ? "fa-heart" : "fa-heart-o")"></i>
+                                    </a>
+                                </div>
+                                        @Html.Hidden("recipeId", item.Recipe.ID)
+                                        @Html.Hidden("userName", Model.UserName)
+                                        @Html.AntiForgeryToken()
+                            }
+                        }
+                    </li>
+
+                </ul>
+            </div>
+
+            <!--<div>
+                <h6 class="card-">by: @item.Recipe.User.UserName</h6>
+
+                @if (!string.IsNullOrEmpty(Model.UserName))
+                {
+                    using (Html.BeginForm("MakeFavorite", "Recipes", FormMethod.Post, new { @class = "makeFavorite" }))
+                    {
+                        <div class="form-group">
+                            |<a class="btn btn-submit" href="#">
+                                <i class="fa @(@item.IsFavorite ? "fa-heart" : "fa-heart-o")"></i>
+                            </a>
+                        </div>
+                        @Html.Hidden("recipeId", item.Recipe.ID)
+                        @Html.Hidden("userName", Model.UserName)
+                        @Html.AntiForgeryToken()
+                    }
+                }
+            </div>-->
+        </div>
+
+
+    }
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $div = $('.card-columns');
+
+            $div.find("form.makeFavorite a.btn-submit").click(function (e) {
+                e.preventDefault();
+
+                var $a = $(this);
+                var $icon = $a.children('i')
+                var $form = $($(this).parents('form')[0]);
+                var action = $form.attr('action');
+                $.ajax({
+                    url: action,
+                    method: 'POST',
+                    data: $form.serializeArray(),
+                    success: function (data) {
+                        if (data.success) {
+                            if (data.favorite) {
+                                $icon.removeClass('fa-heart-o').addClass('fa-heart');
+                            } else {
+                                $icon.removeClass('fa-heart').addClass('fa-heart-o');
+                            }
+                        }
+                    }
+                });
+
+            });
+
+
+        });
+
+    </script>
+}

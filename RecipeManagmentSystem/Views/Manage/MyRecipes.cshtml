@@ -1,0 +1,48 @@
+﻿@model IEnumerable<RecipeManagmentSystem.Models.Recipe>
+@{
+    ViewBag.Title = "MyRecipes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyRecipes</h2>
+
+
+@if (!Model.Any())
+{
+    <h3>No available Recipes</h3>
+}
+
+<div class="card-columns">
+    @foreach (var item in Model)
+    {
+
+        <div class="card">
+            <a href="@Url.Action("Detail", "Recipes", new { RecipeId = item.ID})">
+                <!--Card image-->
+                <div class="view overlay hm-white-slight">
+                    <img src="../Image/@item.Image" class="img-fluid" alt="@item.Title" data-animate-effect="fadeIn">
+                </div>
+                <!--/.Card image-->
+                <!--Card content-->
+                <div class="card-body">
+                    <!--Title-->
+                    <h4 class="card-title">@item.Title</h4>
+                </div>
+            </a>
+            <!--/.Card content-->
+            <div class="card-data">
+                <ul>
+                    <li><i class="fa fa-user"></i>&nbsp;by: @item.User.UserName</li>                    
+
+                </ul>
+            </div>
+        </div>
+
+
+    }
+</div>
+
+
+
+
+

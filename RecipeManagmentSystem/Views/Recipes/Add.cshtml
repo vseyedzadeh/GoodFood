@@ -1,0 +1,94 @@
+﻿@model RecipeManagmentSystem.ViewModels.RecipeCategoryViewModel
+@{
+    ViewBag.Title = "ADD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add New Recipe</h2>
+
+@using (Html.BeginForm("Save", "Recipes"))
+{
+    @Html.ValidationSummary()
+<div class="row" style="background-color:whitesmoke">
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Recipe.Title)
+            @Html.TextBoxFor(m => m.Recipe.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Recipe.Title)
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Recipe.Description)
+            @Html.TextBoxFor(m => m.Recipe.Description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Recipe.Description)
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Recipe.Country)
+            @Html.TextBoxFor(m => m.Recipe.Country, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Recipe.Country)
+        </div>
+    </div>
+</div>
+<div class="row" style="background-color:whitesmoke">
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Recipe.CategoryID)
+            @Html.DropDownListFor(m => m.Recipe.CategoryID,
+                                                              new SelectList(Model.CategoryList, "Id", "Title"),
+                                                              "Select Category", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Recipe.CategoryID)
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Recipe.PrepTime)
+            @Html.TextBoxFor(m => m.Recipe.PrepTime, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Recipe.PrepTime)
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Recipe.CookTime)
+            @Html.TextBoxFor(m => m.Recipe.CookTime, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Recipe.CookTime)
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Recipe.NumOfServ)
+            @Html.TextBoxFor(m => m.Recipe.NumOfServ, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Recipe.NumOfServ)
+        </div>
+    </div>
+</div>
+    <div class="row" style="background-color:whitesmoke">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Recipe.Ingredients) (Please Enter New line for each ingredient)
+                @Html.TextAreaFor(m => m.Recipe.Ingredients, new { @class = "form-control", rows = "10", style = "min-width: 100%" })
+                @Html.ValidationMessageFor(m => m.Recipe.PrepTime)
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Recipe.Direction)
+                @Html.TextAreaFor(m => m.Recipe.Direction, new { @class = "form-control", rows = "10", style = "min-width: 100%" })
+                @Html.ValidationMessageFor(m => m.Recipe.Direction)
+            </div>
+        </div>
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Save</button>
+        @Html.ActionLink("Back to List", "Index", "Home")
+    </div>     
+        }
+
+
+
+        @section scripts
+    {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

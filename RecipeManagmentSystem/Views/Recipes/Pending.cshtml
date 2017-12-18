@@ -1,0 +1,54 @@
+﻿@model IEnumerable<RecipeManagmentSystem.Models.Recipe>
+@{
+    ViewBag.Title = "Pending";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pending Recipe List</h2>
+@if(ViewBag.Success != null)
+    {
+        <h2>@ViewBag.Success</h2>
+    }
+@if (!Model.Any())
+{
+    <p>There is no pending recipe</p>
+}
+else
+{
+    <div class="panel-body">
+        <table id="assets-data-table"
+               class="table table-striped table-bordered"
+               style="width:100%">
+            <thead>
+                <tr>
+                    <th>Pending Recipe to be process</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Category.Title</td>
+                        <td>
+                            @Html.ActionLink("Details", "PendingDetails", "Recipes", new { id = item.ID }, null)
+                            @Html.ActionLink("Edit", "Edit", "Recipes", new { id = item.ID }, null)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#assets-data-table').DataTable();
+        });
+    </script>
+}
+
