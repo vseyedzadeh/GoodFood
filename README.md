@@ -1,2 +1,2 @@
 # GoodFood
-this is a school project (GoodFood)
+this is a school project (GoodFood ....)
